@@ -34,7 +34,7 @@ function fetchDataFromServer(url) {
       extensionList.innerHTML = "";
       let bufferString = "";
       res.data.forEach(extension => {
-        bufferString += extensionCard({title: extension.name, status: 'working', version: 1.0, sources: [], lang: extension.lang});
+        bufferString += extensionCard({title: extension.name, status: 'working', version: 1.0, sources: [], lang: extension.lang, url: extension.sources[0].baseUrl});
         extensionList.innerHTML = bufferString;
       })
 

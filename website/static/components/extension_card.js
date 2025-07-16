@@ -1,4 +1,4 @@
-export default function extensionCard({ title, version, sources, lang, status, lastChecked }) {
+export default function extensionCard({ title, version, sources, lang, status, lastChecked, url }) {
   const statusConfig = {
     working: { 
       dot: 'bg-green-500', 
@@ -82,7 +82,7 @@ export default function extensionCard({ title, version, sources, lang, status, l
       <!-- Card Footer -->
       <div class="px-4 py-2 bg-gray-50 dark:bg-gray-700/30 border-t border-gray-100 dark:border-gray-700 flex justify-between items-center">
         <span class="text-xs text-gray-500 dark:text-gray-400">ID: ${title.toLowerCase().replace(/\s+/g, '-')}</span>
-        <button onclick="sendPingRequest('${title}')" class="text-xs text-indigo-600 dark:text-indigo-400 font-medium hover:underline flex items-center">
+        <button onclick="sendPingRequest('${url}')" id="${url}" class="text-xs text-indigo-600 dark:text-indigo-400 font-medium hover:underline flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
@@ -93,8 +93,21 @@ export default function extensionCard({ title, version, sources, lang, status, l
   `;
 }
 
-function sendPingRequest(message) {
-  alert(message);
+function sendPingRequest(url) {
+  let refresh_element = document.getElementById(url);
+  refresh_element.innerHTML = "refreshing...";
+  fetch(`/api/ping_extension?url=${url}`)
+    .then(res => res.json())
+    .then(res => {
+      refresh_element.innerHTML = ` <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          Refresh
+`
+
+
+      alert(JSON.stringify(res));
+    })
 }
 
 window.sendPingRequest = sendPingRequest;

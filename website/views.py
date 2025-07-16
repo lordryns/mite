@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, jsonify, request
 from extensions import fetch_extensions_from_local_source
 from extensions import fetch_extensions_from_remote_source
 from extensions import get_extension_by_name
+import requests 
 
 views = Blueprint("views", __name__)
 
@@ -30,4 +31,17 @@ def fetch_all_data():
     paginated_data = repo_list[start:end]
 
     return jsonify({"data": paginated_data, "remote": from_remote_source})
+
+
+@views.route("/api/ping_extension")
+def ping_extension():
+    url = request.args.get("url")
+    if not url:
+        return jsonify({"status_code": 404, "response_time": 0.0})
+    try:
+        query = requests.get(url, timeout=5)
+        return jsonify({"status_code": query.status_code, "response_time": 0.0})
+    except:
+        return jsonify({"status_code": 502, "response_time": 0.0})
+        
 
