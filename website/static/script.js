@@ -2,6 +2,7 @@ import extensionCard from '/static/components/extension_card.js'
 
 let extensionList = document.getElementById("extensions-div");
 let remoteOrLocalSpan = document.getElementById("remote-or-local");
+
 extensionList.innerHTML = "Loading extensions...";
 document.addEventListener("DOMContentLoaded", () => {
   fetchDataFromServer("/api/fetch_all?page=1");

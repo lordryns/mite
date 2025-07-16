@@ -1,4 +1,6 @@
- const statusConfig = {
+const notyf = new Notyf(); 
+
+const statusConfig = {
     working: { 
       dot: 'bg-green-500', 
       badge: 'bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-200',
@@ -121,6 +123,8 @@ function sendPingRequest(url) {
        dot_element.className = `w-3 h-3 rounded-full mr-2 ${dot} flex-shrink-0`; 
        badge_element.className = `text-xs px-2 py-1 rounded-full ${badge} flex-shrink-0`; 
        badge_element.textContent = statusText;
+
+      notyf.success("Extension refreshed successfully!");
     })
 }
 
