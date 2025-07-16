@@ -124,7 +124,12 @@ function sendPingRequest(url) {
        badge_element.className = `text-xs px-2 py-1 rounded-full ${badge} flex-shrink-0`; 
        badge_element.textContent = statusText;
 
-      notyf.success("Extension refreshed successfully!");
+      if (status == "working") {
+        notyf.success("Extension is active!");
+      } else {
+        notyf.error("Extension is down, check back later!");
+
+      }
     })
 }
 
