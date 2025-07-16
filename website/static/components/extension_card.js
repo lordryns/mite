@@ -1,5 +1,4 @@
-export default function extensionCard({ title, version, sources, lang, status, lastChecked, url }) {
-  const statusConfig = {
+ const statusConfig = {
     working: { 
       dot: 'bg-green-500', 
       badge: 'bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-200',
@@ -21,6 +20,9 @@ export default function extensionCard({ title, version, sources, lang, status, l
       icon: 'M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
     }
   };
+ 
+
+export default function extensionCard({ title, version, sources, lang, status, lastChecked, url }) {
   
   const { dot, badge, icon } = statusConfig[status] || statusConfig.default;
   const statusText = status ? status.charAt(0).toUpperCase() + status.slice(1) : 'Unknown';
@@ -41,10 +43,10 @@ export default function extensionCard({ title, version, sources, lang, status, l
       <!-- Card Header -->
       <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
         <div class="flex items-center truncate">
-          <div class="w-3 h-3 rounded-full mr-2 ${dot} flex-shrink-0"></div>
+          <div class="w-3 h-3 rounded-full mr-2 ${dot} flex-shrink-0" id="${url}_dot_element"></div>
           <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate">${title}</h3>
         </div>
-        <span class="text-xs px-2 py-1 rounded-full ${badge} flex-shrink-0">
+        <span class="text-xs px-2 py-1 rounded-full ${badge} flex-shrink-0" id="${url}_badge_element">
           ${statusText}
         </span>
       </div>
@@ -82,7 +84,7 @@ export default function extensionCard({ title, version, sources, lang, status, l
       <!-- Card Footer -->
       <div class="px-4 py-2 bg-gray-50 dark:bg-gray-700/30 border-t border-gray-100 dark:border-gray-700 flex justify-between items-center">
         <span class="text-xs text-gray-500 dark:text-gray-400">ID: ${title.toLowerCase().replace(/\s+/g, '-')}</span>
-        <button onclick="sendPingRequest('${url}')" id="${url}" class="text-xs text-indigo-600 dark:text-indigo-400 font-medium hover:underline flex items-center">
+        <button onclick="sendPingRequest('${url}')" id="${url}_refresh_element" class="text-xs text-indigo-600 dark:text-indigo-400 font-medium hover:underline flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
@@ -94,7 +96,9 @@ export default function extensionCard({ title, version, sources, lang, status, l
 }
 
 function sendPingRequest(url) {
-  let refresh_element = document.getElementById(url);
+  let refresh_element = document.getElementById(`${url}_refresh_element`);
+  let dot_element = document.getElementById(`${url}_dot_element`);
+  let badge_element = document.getElementById(`${url}_badge_element`);
   refresh_element.innerHTML = "refreshing...";
   fetch(`/api/ping_extension?url=${url}`)
     .then(res => res.json())
@@ -105,8 +109,18 @@ function sendPingRequest(url) {
           Refresh
 `
 
+        let status = "";
+        if (res.status_code == 200) {
+          status = "working";
+        } else {
+          status = "down";
+        }
+        const { dot, badge, icon } = statusConfig[status] || statusConfig.default;
+        const statusText = status ? status.charAt(0).toUpperCase() + status.slice(1) : 'Unknown';
 
-      alert(JSON.stringify(res));
+       dot_element.className = `w-3 h-3 rounded-full mr-2 ${dot} flex-shrink-0`; 
+       badge_element.className = `text-xs px-2 py-1 rounded-full ${badge} flex-shrink-0`; 
+       badge_element.textContent = statusText;
     })
 }
 
