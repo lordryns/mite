@@ -10,14 +10,16 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     let searchInput = document.getElementById("search-input");
     if (searchInput.value.length > 0) {
+      extensionList.innerHTML = "Loading extensions...";
       fetchDataFromServer(`/api/fetch_all?search=${searchInput.value}`);
       
       const showing = document.getElementById("showing-results-for");
       showing.innerHTML = `Showing results for "${searchInput.value}" `;
 
       showing.appendChild(xiconFunc(() => {
-          showing.innerHTML = "";
-          fetchDataFromServer("/api/fetch_all?page=1");
+        showing.innerHTML = "";
+        extensionList.innerHTML = "Loading extensions...";
+        fetchDataFromServer("/api/fetch_all?page=1");
       }));
       searchInput.value = "";
 
@@ -34,7 +36,13 @@ function fetchDataFromServer(url) {
       extensionList.innerHTML = "";
       let bufferString = "";
       res.data.forEach(extension => {
-        bufferString += extensionCard({title: extension.name, status: 'working', version: 1.0, sources: [], lang: extension.lang, url: extension.sources[0].baseUrl});
+        let status = "";
+        if (extension.ping_response.status_code == 200) {
+          status = "working";
+        } else {
+          status = "down";
+        }
+        bufferString += extensionCard({title: extension.name, status: status, version: 1.0, sources: [], lang: extension.lang, url: extension.sources[0].baseUrl});
         extensionList.innerHTML = bufferString;
       })
 
