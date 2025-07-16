@@ -10,6 +10,12 @@ views = Blueprint("views", __name__)
 def home():
        return render_template("index.html")
 
+@views.route("/settings")
+def settings():
+       return render_template("settings.html")
+
+
+#---------- API ROUTES -----------#
 @views.route("/api/fetch_all")
 def fetch_all_data():
     try:
