@@ -43,7 +43,7 @@ function fetchDataFromServer(url) {
         } else {
           status = "down";
         }
-        bufferString += extensionCard({title: extension.name, status: status, version: 1.0, sources: [], lang: extension.lang, url: extension.sources[0].baseUrl});
+        bufferString += extensionCard({title: extension.name, status: status, version: extension.version, sources: [], lang: extension.sources[0].lang, url: extension.sources[0].baseUrl, apk: extension.apk});
         extensionList.innerHTML = bufferString;
       })
 

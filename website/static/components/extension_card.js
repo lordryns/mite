@@ -24,11 +24,12 @@ const statusConfig = {
   };
  
 
-export default function extensionCard({ title, version, sources, lang, status, lastChecked, url }) {
+export default function extensionCard({ title, version, sources, lang, status, lastChecked, url, apk }) {
   
   const { dot, badge, icon } = statusConfig[status] || statusConfig.default;
   const statusText = status ? status.charAt(0).toUpperCase() + status.slice(1) : 'Unknown';
 
+  const download_link = `https://raw.githubusercontent.com/keiyoushi/extensions/repo/apk/${apk}`
   const sourcesHTML = sources.map(source => `
     <div class="flex items-center text-xs">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -85,7 +86,10 @@ export default function extensionCard({ title, version, sources, lang, status, l
 
       <!-- Card Footer -->
       <div class="px-4 py-2 bg-gray-50 dark:bg-gray-700/30 border-t border-gray-100 dark:border-gray-700 flex justify-between items-center">
-        <span class="text-xs text-gray-500 dark:text-gray-400">ID: ${title.toLowerCase().replace(/\s+/g, '-')}</span>
+        <span class="text-xs text-gray-500 dark:text-gray-400">
+
+        <a class="text-xs text-indigo-600 dark:text-indigo-400 font-medium hover:underline flex items-center" href="${download_link}" download>Download</a>
+        </span>
         <button onclick="sendPingRequest('${url}')" id="${url}_refresh_element" class="text-xs text-indigo-600 dark:text-indigo-400 font-medium hover:underline flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
