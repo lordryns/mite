@@ -88,7 +88,7 @@ export default function extensionCard({ title, version, sources, lang, status, l
       <div class="px-4 py-2 bg-gray-50 dark:bg-gray-700/30 border-t border-gray-100 dark:border-gray-700 flex justify-between items-center">
         <span class="text-xs text-gray-500 dark:text-gray-400">
 
-        <a class="text-xs text-indigo-600 dark:text-indigo-400 font-medium hover:underline flex items-center" href="${download_link}" download>Download</a>
+        <a class="text-xs text-indigo-600 dark:text-indigo-400 font-medium hover:underline flex items-center" href="${download_link}" download>Install</a>
         </span>
         <button onclick="sendPingRequest('${url}')" id="${url}_refresh_element" class="text-xs text-indigo-600 dark:text-indigo-400 font-medium hover:underline flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
