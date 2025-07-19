@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   fetchDataFromServer(`/api/fetch_all?page=${pageNumber}`);
 
    pageNumberPreviousBtn.onclick = function () {
-    if (pageNumber > 0){
+    if (pageNumber > 1){
       pageNumber -= 1;
     }
     fetchDataFromServer(`/api/fetch_all?page=${pageNumber}`);
