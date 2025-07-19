@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
-    <!-- Header (unchanged from your original) -->
+    <!-- Header -->
     <header class="bg-indigo-600 dark:bg-indigo-800 text-white shadow-sm">
         <div class="container mx-auto px-4 py-3">
             <div class="flex items-center justify-between">
@@ -27,7 +27,7 @@
         </div>
     </header>
 
-    <!-- Your original alert (unchanged) -->
+    <!-- Alert -->
     <div class="fixed inset-0 flex items-end justify-center px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-end z-50">
         <div id="alert-container" class="max-w-sm w-full bg-white dark:bg-gray-800 shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden transition-opacity duration-300">
             <div class="p-4">
@@ -62,12 +62,43 @@
     <main class="container mx-auto px-4 pb-20">
         <!-- Settings Section -->
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 my-6">
-            <h2 class="text-lg font-medium mb-4">Display Settings</h2>
+            <h2 class="text-lg font-medium mb-4">Settings</h2>
             
-            <!-- Extensions Per Page Control -->
+            <!-- Notification Preferences (moved to top) -->
+            <div class="mb-6">
+                <label class="flex items-center space-x-3">
+                    <input type="checkbox" id="hide-alert" class="rounded border-gray-300 dark:border-gray-600 text-indigo-600 dark:text-indigo-400 focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:bg-gray-700">
+                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Don't show startup tips
+                    </span>
+                </label>
+                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    Disable the informational popup when loading the page
+                </p>
+            </div>
+
+            <!-- Data Source Toggle -->
             <div class="mb-6">
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Number of extensions to show per page
+                    Data source
+                </label>
+                <div class="flex rounded-md shadow-sm">
+                    <button type="button" id="local-source" class="px-4 py-2 text-sm font-medium rounded-l-md border border-gray-300 dark:border-gray-600 bg-indigo-600 dark:bg-indigo-700 text-white">
+                        Local
+                    </button>
+                    <button type="button" id="remote-source" class="px-4 py-2 text-sm font-medium rounded-r-md border-t border-b border-r border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        Remote
+                    </button>
+                </div>
+                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    Switch between local JSON file or remote API data source
+                </p>
+            </div>
+
+            <!-- Extensions Per Page Control (moved below) -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Extensions per page
                 </label>
                 <div class="flex items-center">
                     <button id="decrease-count" class="p-2 rounded-l-md border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600">
@@ -84,23 +115,14 @@
                         </svg>
                     </button>
                 </div>
-            </div>
-
-            <!-- Alert Preference -->
-            <div>
-                <label class="flex items-center space-x-3">
-                    <input type="checkbox" id="hide-alert" class="rounded border-gray-300 dark:border-gray-600 text-indigo-600 dark:text-indigo-400 focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:bg-gray-700">
-                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
-                        Don't show startup tips
-                    </span>
-                </label>
+                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    Number of extensions displayed on each page
+                </p>
             </div>
         </div>
-
-
     </main>
 
-    <!-- Bottom Navigation (unchanged from your original) -->
+    <!-- Bottom Navigation -->
     <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 flex justify-around py-2">
         <a href="/" class="flex flex-col items-center text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
