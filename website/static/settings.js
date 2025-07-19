@@ -8,15 +8,19 @@ alertEl.remove();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+
+  document.getElementById('tip-alert').onclick = closeAlert;
+
+  handleExtensionPerPage();
+  toggleLocalRemoteSource(); 
+});
+
+function handleExtensionPerPage() {
   const countElement = document.getElementById('extensions-count');
   const decreaseBtn = document.getElementById('decrease-count');
   const increaseBtn = document.getElementById('increase-count');
   const hideAlertCheckbox = document.getElementById('hide-alert');
-  const saveBtn = document.getElementById('save-settings');
-
-
-  document.getElementById('tip-alert').onclick = closeAlert;
-
+   
   let extensionAmount = 10;
   extensionAmount = localStorage.getItem("extension_amount");
   if (extensionAmount === null) {
@@ -47,6 +51,45 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-});
+}
 
+function toggleLocalRemoteSource() {
+  const localSourceBtn = document.getElementById('local-source');
+  const remoteSourceBtn = document.getElementById('remote-source');
 
+  let isLocal = false;
+  isLocal = localStorage.getItem("is-local");
+  if (isLocal === null) {
+    localStorage.setItem("is-local", false.toString())
+    isLocal = false;
+  }
+
+  isLocal = isLocal === 'true';
+
+  localSourceBtn.onclick = function () {
+    isLocal = true;
+    localStorage.setItem("is-local", isLocal.toString())
+    updateButtonStyles(isLocal);
+    }
+
+  remoteSourceBtn.onclick = function () {
+    isLocal = false;
+   localStorage.setItem("is-local", isLocal.toString())
+    updateButtonStyles(isLocal);
+  }
+
+  updateButtonStyles(isLocal);
+
+  function updateButtonStyles(isLocal) {
+    const activeClasses = "px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-600 bg-indigo-600 dark:bg-indigo-700 text-white";
+    const inactiveClasses = "px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600";
+    
+    if (isLocal) {
+      localSourceBtn.className = `${activeClasses} rounded-l-md`;
+      remoteSourceBtn.className = `${inactiveClasses} rounded-r-md border-l-0`;
+    } else {
+      remoteSourceBtn.className = `${activeClasses} rounded-r-md`;
+      localSourceBtn.className = `${inactiveClasses} rounded-l-md border-r-0`;
+    }
+  }
+}
