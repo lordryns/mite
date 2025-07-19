@@ -13,15 +13,16 @@ let pageNumberPreviousBtn = document.getElementById("page_number_previous_btn");
 let pageNumberDisplay = document.getElementById("page_number_display"); 
 let pageNumberNextBtn = document.getElementById("page_number_next_btn"); 
 
+let extensionAmount = localStorage.getItem("extension_amount");
 extensionList.innerHTML = "Loading extensions...";
 document.addEventListener("DOMContentLoaded", () => {
-  fetchDataFromServer(`/api/fetch_all?page=${pageNumber}`);
+  fetchExtensionBaseLayer();
 
    pageNumberPreviousBtn.onclick = function () {
     if (pageNumber > 1){
       pageNumber -= 1;
     }
-    fetchDataFromServer(`/api/fetch_all?page=${pageNumber}`);
+    fetchExtensionBaseLayer();
   }
   pageNumberNextBtn.onclick = function () { 
       pageNumber += 1;
@@ -46,7 +47,13 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 })
 
-
+function fetchExtensionBaseLayer() {
+  if (extensionAmount !== null) {
+    fetchDataFromServer(`/api/fetch_all?page=${pageNumber}&per_page=${extensionAmount}`);
+  } else {
+    fetchDataFromServer(`/api/fetch_all?page=${pageNumber}`);
+  }
+}
 
 function fetchDataFromServer(url) {
   extensionList.innerHTML = "Loading extensions...";

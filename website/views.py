@@ -30,7 +30,7 @@ def fetch_all_data():
         repo_list = get_extension_by_name(search, repo_list)
         print(repo_list)
     page = int(request.args.get("page", 1))
-    per_page = 10
+    per_page = int(request.args.get("per_page", 10))
     start = (page - 1) * per_page 
     end = start + per_page 
 
