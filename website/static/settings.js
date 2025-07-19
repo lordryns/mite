@@ -17,12 +17,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('tip-alert').onclick = closeAlert;
 
-  let extensionAmount = "";
+  let extensionAmount = 10;
   extensionAmount = localStorage.getItem("extension_amount");
   if (extensionAmount === null) {
     localStorage.setItem("extension_amount", 10)
     extensionAmount = 10;
-  } 
+  }
+
+  extensionAmount = Number(extensionAmount);
+
+
 
   countElement.innerHTML = extensionAmount;
 
