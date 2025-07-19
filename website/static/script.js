@@ -1,17 +1,36 @@
+// this script is for the index.html file
+// and should not be imported anywhere else (unless you really want to)
+
+
 import extensionCard from '/static/components/extension_card.js'
 
 let extensionList = document.getElementById("extensions-div");
 let remoteOrLocalSpan = document.getElementById("remote-or-local");
 
+let pageNumber = 1;
+
+let pageNumberPreviousBtn = document.getElementById("page_number_previous_btn"); 
+let pageNumberDisplay = document.getElementById("page_number_display"); 
+let pageNumberNextBtn = document.getElementById("page_number_next_btn"); 
+
 extensionList.innerHTML = "Loading extensions...";
 document.addEventListener("DOMContentLoaded", () => {
-  fetchDataFromServer("/api/fetch_all?page=1");
+  fetchDataFromServer(`/api/fetch_all?page=${pageNumber}`);
 
+   pageNumberPreviousBtn.onclick = function () {
+    if (pageNumber > 0){
+      pageNumber -= 1;
+    }
+    fetchDataFromServer(`/api/fetch_all?page=${pageNumber}`);
+  }
+  pageNumberNextBtn.onclick = function () { 
+      pageNumber += 1;
+    fetchDataFromServer(`/api/fetch_all?page=${pageNumber}`);
+  }
   document.getElementById("search-form").addEventListener("submit", (e) => {
     e.preventDefault();
     let searchInput = document.getElementById("search-input");
     if (searchInput.value.length > 0) {
-      extensionList.innerHTML = "Loading extensions...";
       fetchDataFromServer(`/api/fetch_all?search=${searchInput.value}`);
       
       const showing = document.getElementById("showing-results-for");
@@ -19,8 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       showing.appendChild(xiconFunc(() => {
         showing.innerHTML = "";
-        extensionList.innerHTML = "Loading extensions...";
-        fetchDataFromServer("/api/fetch_all?page=1");
+        fetchDataFromServer(`/api/fetch_all?page=${pageNumber}`);
       }));
       searchInput.value = "";
 
@@ -31,6 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 function fetchDataFromServer(url) {
+  extensionList.innerHTML = "Loading extensions...";
+  pageNumberDisplay.innerHTML = pageNumber;
   fetch(url)
     .then(res => res.json())
     .then(res => {
