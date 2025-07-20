@@ -12,10 +12,9 @@ alertEl.remove();
 handleExtensionPerPage();
 toggleLocalRemoteSource(); 
 toggleGetExtensionStatusOnLoadState();
-
+toggleShowTips();
 document.addEventListener('DOMContentLoaded', () => {
 
-  document.getElementById('tip-alert').onclick = closeAlert;
 
  });
 
@@ -112,5 +111,28 @@ function toggleGetExtensionStatusOnLoadState() {
   checkbox.checked = isChecked;
   checkbox.onclick = function () {
     localStorage.setItem("ping-onload", checkbox.checked)
+  }
+}
+
+function toggleShowTips() {
+  const checkbox = document.getElementById('show-tips-checkbox');
+
+  let isChecked = true;
+  isChecked = localStorage.getItem("show-tips");
+  if (isChecked === null) {
+    localStorage.setItem("show-tips", true.toString())
+    isChecked = true;
+  }
+
+  isChecked = isChecked === 'true';
+  checkbox.checked = isChecked;
+
+  if (isChecked) {
+    document.getElementById('alert-container').remove();
+  } else {
+    document.getElementById('tip-alert').onclick = closeAlert;
+  }
+  checkbox.onclick = function () {
+    localStorage.setItem("show-tips", checkbox.checked)
   }
 }
