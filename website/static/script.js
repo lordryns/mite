@@ -15,9 +15,12 @@ let pageNumberNextBtn = document.getElementById("page_number_next_btn");
 
 let extensionAmount = localStorage.getItem("extension_amount");
 let isLocal = localStorage.getItem("is-local") == 'true';
-let pingOnload = localStorage.getItem("ping-onload") == 'true';
+let pingOnload = localStorage.getItem("ping-onload");
+if (pingOnload === null) {
+  localStorage.setItem("ping-onload", true.toString())
+  pingOnload = true;
+}
 extensionList.innerHTML = "Loading extensions...";
-
 let baseUrl = ""
 let userSearch = "";
 document.addEventListener("DOMContentLoaded", () => {
