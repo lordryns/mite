@@ -14,15 +14,7 @@
     tailwind.config = {
       darkMode: 'class', // Required for manual toggling
     }
-  </script>
-  <body>
-    <main>
-      {%block content%}
-      {%endblock%}
-    </main>
-  </body>
-  <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
-  <script>
+
 document.getElementById('theme-toggle').addEventListener('click', function() {
   // Toggle the dark class on the html element
   const html = document.documentElement;
@@ -57,5 +49,16 @@ document.addEventListener('DOMContentLoaded', function() {
     );
   }
 });
+  </script>
+
+  <body>
+    <main>
+      {%block content%}
+      {%endblock%}
+    </main>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+  <script>
+
   </script>
 </html>
