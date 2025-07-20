@@ -83,6 +83,9 @@ function fetchDataFromServer(url) {
         let status = "";
         if (extension.ping_response.status_code == 200) {
           status = "working";
+          if (extension.ping_response.response_time > 4) {
+            status = "unstable";
+          }
         } else {
           status = "down";
         }

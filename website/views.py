@@ -3,6 +3,7 @@ from extensions import fetch_extensions_from_local_source
 from extensions import fetch_extensions_from_remote_source
 from extensions import get_extension_by_name
 import requests 
+import time
 
 views = Blueprint("views", __name__)
 
@@ -20,7 +21,6 @@ def settings():
 def fetch_all_data():
     is_local = request.args.get("is_local", 'false')
     is_local = is_local == 'true'
-    print(is_local)
     if is_local:
         repo_list = fetch_extensions_from_local_source()
         from_remote_source = False
@@ -36,7 +36,6 @@ def fetch_all_data():
     search = request.args.get("search")
     if search:
         repo_list = get_extension_by_name(search, repo_list)
-        print(repo_list)
     page = int(request.args.get("page", 1))
     per_page = int(request.args.get("per_page", 10))
     start = (page - 1) * per_page 
@@ -59,8 +58,11 @@ def ping_extension():
 
 def ping_extension_func(url: str) -> dict[str, int | float]:
     try:
+        t0 = time.time()
         query = requests.get(url, timeout=5)
-        return {"status_code": query.status_code, "response_time": 0.0}
+        t1 = time.time()
+
+        return {"status_code": query.status_code, "response_time": t1 - t0}
     except:
         return {"status_code": 502, "response_time": 0.0}
 

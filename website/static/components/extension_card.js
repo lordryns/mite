@@ -118,9 +118,14 @@ function sendPingRequest(url) {
         let status = "";
         if (res.status_code == 200) {
           status = "working";
+          if (res.response_time > 4) {
+            status = "unstable";
+        }
+
         } else {
           status = "down";
         }
+
         const { dot, badge, icon } = statusConfig[status] || statusConfig.default;
         const statusText = status ? status.charAt(0).toUpperCase() + status.slice(1) : 'Unknown';
 
