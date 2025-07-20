@@ -104,7 +104,7 @@ function toggleGetExtensionStatusOnLoadState() {
   let isChecked = true;
   isChecked = localStorage.getItem("ping-onload");
   if (isChecked === null) {
-    localStorage.setItem("ping-onload", false.toString())
+    localStorage.setItem("ping-onload", true.toString())
     isChecked = true;
   }
 
