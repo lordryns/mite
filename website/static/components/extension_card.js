@@ -118,7 +118,7 @@ function sendPingRequest(url) {
         let status = "";
         if (res.status_code == 200) {
           status = "working";
-          if (res.ping_response.response_time > 4) {
+          if (res.response_time > 4) {
             status = "unstable";
         }
 
