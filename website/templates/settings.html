@@ -96,28 +96,31 @@
                 </p>
             </div>
 
-            <!-- send request toggle -->
+
+            <!-- Send Request Toggle -->
             <div class="mb-6">
-              <label class="inline-flex items-center cursor-pointer">
-                <!-- The hidden checkbox -->
-                <input type="checkbox" id="get-extension-status-checkbox" class="sr-only peer">
-                
-                <!-- Toggle track -->
-                <div class="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:bg-indigo-600 peer-focus:ring-4 peer-focus:ring-indigo-300 dark:peer-focus:ring-indigo-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600">
+              <label class="flex items-start cursor-pointer gap-3">
+                <!-- Toggle Container -->
+                <div class="flex-none pt-0.5"> <!-- Added padding to align with text -->
+                  <input type="checkbox" id="get-extension-status-checkbox" class="sr-only peer">
+                  <!-- Toggle Track -->
+                  <div class="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:bg-indigo-600 peer-focus:ring-4 peer-focus:ring-indigo-300 dark:peer-focus:ring-indigo-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600">
+                  </div>
                 </div>
                 
-                <!-- Label -->
-                <span class="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Check extension status
-                  <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-                    Check extension status on page load (this results in slower load time)
+                <!-- Label Container -->
+                <div class="flex-1 min-w-0"> <!-- Prevents text overflow -->
+                  <span class="block text-sm font-medium text-gray-700 dark:text-gray-300 leading-tight">
+                    Check extension status
+                  </span>
+                  <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-snug">
+                    Check extension status on page load (may increase load time)
                   </p>
-                </span>
+                </div>
               </label>
             </div>
 
-
-            <!-- Extensions Per Page Control (moved below) -->
+                      <!-- Extensions Per Page Control (moved below) -->
             <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Extensions per page
