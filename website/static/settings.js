@@ -7,13 +7,16 @@ alertEl.remove();
 
 }
 
+
+// putting outside the content loaded function to speed up the load
+handleExtensionPerPage();
+toggleLocalRemoteSource(); 
+
 document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('tip-alert').onclick = closeAlert;
 
-  handleExtensionPerPage();
-  toggleLocalRemoteSource(); 
-});
+ });
 
 function handleExtensionPerPage() {
   const countElement = document.getElementById('extensions-count');
