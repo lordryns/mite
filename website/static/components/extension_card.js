@@ -118,7 +118,7 @@ function sendPingRequest(url) {
         let status = "";
         if (res.status_code == 200) {
           status = "working";
-          if (res.response_time > 4) {
+          if (res.ping_response.response_time > 4) {
             status = "unstable";
         }
 
@@ -133,9 +133,11 @@ function sendPingRequest(url) {
        badge_element.className = `text-xs px-2 py-1 rounded-full ${badge} flex-shrink-0`; 
        badge_element.textContent = statusText;
 
-      if (status == "working") {
+      if (status === "working") {
         notyf.success("Extension is active!");
-      } else {
+      } else if (status === "unstable") {
+        notyf.success("Extension works but is unstable, try again  later.");
+      }else {
         notyf.error("Extension is down, check back later!");
 
       }

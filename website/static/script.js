@@ -14,7 +14,8 @@ let pageNumberDisplay = document.getElementById("page_number_display");
 let pageNumberNextBtn = document.getElementById("page_number_next_btn"); 
 
 let extensionAmount = localStorage.getItem("extension_amount");
-let isLocal = localStorage.getItem("is-local");
+let isLocal = localStorage.getItem("is-local") == 'true';
+let pingOnload = localStorage.getItem("ping-onload") == 'true';
 extensionList.innerHTML = "Loading extensions...";
 
 let baseUrl = ""
@@ -56,17 +57,12 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 function fetchExtensionBaseLayer() {
-  if (isLocal !== null) {
-      isLocal = isLocal === 'true';
-  } else {
-    isLocal = false;
-  }
   if (extensionAmount === null) {
     extensionAmount = 10;
   } 
 
 
-  let finalUrl = `/api/fetch_all?page=${pageNumber}&per_page=${extensionAmount}&is_local=${isLocal}&search=${userSearch}` 
+  let finalUrl = `/api/fetch_all?page=${pageNumber}&per_page=${extensionAmount}&is_local=${isLocal}&search=${userSearch}&ping_onload=${pingOnload}` 
   fetchDataFromServer(finalUrl);
   return finalUrl;
 }

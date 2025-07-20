@@ -11,6 +11,7 @@ alertEl.remove();
 // putting outside the content loaded function to speed up the load
 handleExtensionPerPage();
 toggleLocalRemoteSource(); 
+toggleGetExtensionStatusOnLoadState();
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -94,5 +95,22 @@ function toggleLocalRemoteSource() {
       remoteSourceBtn.className = `${activeClasses} rounded-r-md`;
       localSourceBtn.className = `${inactiveClasses} rounded-l-md border-r-0`;
     }
+  }
+}
+
+function toggleGetExtensionStatusOnLoadState() {
+  const checkbox = document.getElementById('get-extension-status-checkbox');
+
+  let isChecked = true;
+  isChecked = localStorage.getItem("ping-onload");
+  if (isChecked === null) {
+    localStorage.setItem("ping-onload", false.toString())
+    isChecked = true;
+  }
+
+  isChecked = isChecked === 'true';
+  checkbox.checked = isChecked;
+  checkbox.onclick = function () {
+    localStorage.setItem("ping-onload", checkbox.checked)
   }
 }

@@ -19,8 +19,9 @@ def settings():
 #---------- API ROUTES -----------#
 @views.route("/api/fetch_all")
 def fetch_all_data():
-    is_local = request.args.get("is_local", 'false')
-    is_local = is_local == 'true'
+    is_local = request.args.get("is_local", 'True').capitalize() == 'True'
+    ping_onload = request.args.get("ping_onload", 'True').capitalize() == 'True'
+    print(ping_onload)
     if is_local:
         repo_list = fetch_extensions_from_local_source()
         from_remote_source = False
@@ -43,9 +44,9 @@ def fetch_all_data():
 
     paginated_data = repo_list[start:end]
     for i in range(len(paginated_data)):
-        paginated_data[i]["ping_response"] = ping_extension_func(paginated_data[i]["sources"][0]["baseUrl"])
+        paginated_data[i]["ping_response"] = ping_extension_func(paginated_data[i]["sources"][0]["baseUrl"], ping_onload)
 
-    return jsonify({"data": paginated_data, "remote": from_remote_source})
+    return jsonify({"data": paginated_data, "remote": from_remote_source, "ping_onload": ping_onload})
 
 
 @views.route("/api/ping_extension")
@@ -53,13 +54,16 @@ def ping_extension():
     url = request.args.get("url")
     if not url:
         return jsonify({"status_code": 404, "response_time": 0.0})
-    return jsonify(ping_extension_func(url))        
+    return jsonify(ping_extension_func(url, True))        
 
 
-def ping_extension_func(url: str) -> dict[str, int | float]:
+def ping_extension_func(url: str, can_ping: bool) -> dict[str, int | float]:
     try:
         t0 = time.time()
-        query = requests.get(url, timeout=5)
+        if can_ping:
+            query = requests.get(url, timeout=5)
+        else:    
+            return {"status_code": 000, "response_time": 0.0}
         t1 = time.time()
 
         return {"status_code": query.status_code, "response_time": t1 - t0}
