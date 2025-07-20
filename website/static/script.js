@@ -82,6 +82,8 @@ function fetchDataFromServer(url) {
           if (extension.ping_response.response_time > 4) {
             status = "unstable";
           }
+        } else if (!extension.ping_response.ping_onload) {
+          status = "default";
         } else {
           status = "down";
         }

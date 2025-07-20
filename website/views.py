@@ -46,7 +46,7 @@ def fetch_all_data():
     for i in range(len(paginated_data)):
         paginated_data[i]["ping_response"] = ping_extension_func(paginated_data[i]["sources"][0]["baseUrl"], ping_onload)
 
-    return jsonify({"data": paginated_data, "remote": from_remote_source, "ping_onload": ping_onload})
+    return jsonify({"data": paginated_data, "remote": from_remote_source})
 
 
 @views.route("/api/ping_extension")
@@ -63,10 +63,10 @@ def ping_extension_func(url: str, can_ping: bool) -> dict[str, int | float]:
         if can_ping:
             query = requests.get(url, timeout=5)
         else:    
-            return {"status_code": 000, "response_time": 0.0}
+            return {"status_code": 000, "response_time": 0.0, "ping_onload": can_ping}
         t1 = time.time()
 
-        return {"status_code": query.status_code, "response_time": t1 - t0}
+        return {"status_code": query.status_code, "response_time": t1 - t0, "ping_onload": can_ping}
     except:
-        return {"status_code": 502, "response_time": 0.0}
+        return {"status_code": 502, "response_time": 0.0, "ping_onload": can_ping}
 
