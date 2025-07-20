@@ -1,5 +1,5 @@
 # mite
-Check the status of mihon/tachiyomi repositories easily with Mite.
+Check the status of mihon/tachiyomi repositories and install them easily with Mite.
 
 ## Application
 
