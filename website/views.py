@@ -18,7 +18,8 @@ def settings():
 #---------- API ROUTES -----------#
 @views.route("/api/fetch_all")
 def fetch_all_data():
-    is_local = request.args.get("is_local", False)
+    is_local = request.args.get("is_local", 'false')
+    is_local = is_local == 'true'
     print(is_local)
     if is_local:
         repo_list = fetch_extensions_from_local_source()
