@@ -18,12 +18,19 @@ def settings():
 #---------- API ROUTES -----------#
 @views.route("/api/fetch_all")
 def fetch_all_data():
-    try:
-        repo_list = fetch_extensions_from_remote_source() 
-        from_remote_source = True
-    except:
+    is_local = request.args.get("is_local", False)
+    print(is_local)
+    if is_local:
         repo_list = fetch_extensions_from_local_source()
         from_remote_source = False
+
+    else:
+        try:
+            repo_list = fetch_extensions_from_remote_source() 
+            from_remote_source = True
+        except:
+            repo_list = fetch_extensions_from_local_source()
+            from_remote_source = False
 
     search = request.args.get("search")
     if search:
