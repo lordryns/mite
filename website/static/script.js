@@ -16,31 +16,38 @@ let pageNumberNextBtn = document.getElementById("page_number_next_btn");
 let extensionAmount = localStorage.getItem("extension_amount");
 let isLocal = localStorage.getItem("is-local");
 extensionList.innerHTML = "Loading extensions...";
+
+let baseUrl = ""
+let userSearch = "";
 document.addEventListener("DOMContentLoaded", () => {
-  fetchExtensionBaseLayer();
+  baseUrl = fetchExtensionBaseLayer();
 
    pageNumberPreviousBtn.onclick = function () {
     if (pageNumber > 1){
       pageNumber -= 1;
+      fetchExtensionBaseLayer();
     }
-    fetchExtensionBaseLayer();
   }
   pageNumberNextBtn.onclick = function () { 
-      pageNumber += 1;
-    fetchDataFromServer(`/api/fetch_all?page=${pageNumber}`);
+    pageNumber += 1;
+    fetchExtensionBaseLayer();
   }
   document.getElementById("search-form").addEventListener("submit", (e) => {
     e.preventDefault();
     let searchInput = document.getElementById("search-input");
     if (searchInput.value.length > 0) {
-      fetchDataFromServer(`/api/fetch_all?search=${searchInput.value}`);
+      pageNumber = 1;
+      userSearch = searchInput.value;
+      fetchExtensionBaseLayer();
       
       const showing = document.getElementById("showing-results-for");
       showing.innerHTML = `Showing results for "${searchInput.value}" `;
 
       showing.appendChild(xiconFunc(() => {
         showing.innerHTML = "";
-        fetchDataFromServer(`/api/fetch_all?page=${pageNumber}`);
+        userSearch = "";
+        pageNumber = 1;
+        fetchExtensionBaseLayer();
       }));
       searchInput.value = "";
 
@@ -59,7 +66,9 @@ function fetchExtensionBaseLayer() {
   } 
 
 
-  fetchDataFromServer(`/api/fetch_all?page=${pageNumber}&per_page=${extensionAmount}&is_local=${isLocal}`);
+  let finalUrl = `/api/fetch_all?page=${pageNumber}&per_page=${extensionAmount}&is_local=${isLocal}&search=${userSearch}` 
+  fetchDataFromServer(finalUrl);
+  return finalUrl;
 }
 
 function fetchDataFromServer(url) {
