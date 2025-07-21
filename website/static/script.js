@@ -90,7 +90,7 @@ function fetchDataFromServer(url) {
         } else {
           status = "down";
         }
-        bufferString += extensionCard({title: extension.name, status: status, version: extension.version, sources: [], lang: extension.sources[0].lang, url: extension.sources[0].baseUrl, apk: extension.apk});
+        bufferString += extensionCard({title: extension.name, status: status, version: extension.version, sources: [], lang: extension.sources[0].lang, response_time: extension.ping_response.response_time.toFixed(2), url: extension.sources[0].baseUrl, apk: extension.apk});
         extensionList.innerHTML = bufferString;
       })
 

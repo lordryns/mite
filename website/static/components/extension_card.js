@@ -24,7 +24,7 @@ const statusConfig = {
   };
  
 
-export default function extensionCard({ title, version, sources, lang, status, lastChecked, url, apk }) {
+export default function extensionCard({ title, version, sources, lang, status, response_time, url, apk }) {
   
   const { dot, badge, icon } = statusConfig[status] || statusConfig.default;
   const statusText = status ? status.charAt(0).toUpperCase() + status.slice(1) : 'Unknown';
@@ -63,7 +63,7 @@ export default function extensionCard({ title, version, sources, lang, status, l
           </svg>
           <div>
             <p class="text-xs text-gray-500 dark:text-gray-400">Version <span class="font-medium">${version}</span></p>
-            <p class="text-xs text-gray-400 dark:text-gray-500">Last checked: ${lastChecked}</p>
+            <p class="text-xs text-gray-400 dark:text-gray-500">Response time: ${response_time}</p>
           </div>
         </div>
 
